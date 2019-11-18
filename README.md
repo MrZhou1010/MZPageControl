@@ -6,6 +6,7 @@
 ![image](https://github.com/MrZhou1010/MZPageControl/blob/master/demo.png)
 
 实现：
+
     UIView *demo1View = [[UIView alloc] initWithFrame:CGRectMake(0, 100, self.view.frame.size.width, 30)];
     demo1View.backgroundColor = [UIColor orangeColor];
     [self.view addSubview:demo1View];
