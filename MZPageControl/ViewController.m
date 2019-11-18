@@ -84,6 +84,21 @@
     demo5PageControl.pageCornerRadius = 3;
     demo5PageControl.currentPageCornerRadius = 8;
     [demo5View addSubview:demo5PageControl];
+    
+    UIView *demo6View = [[UIView alloc] initWithFrame:CGRectMake(0, 350, self.view.frame.size.width, 30)];
+    demo6View.backgroundColor = [UIColor orangeColor];
+    [self.view addSubview:demo6View];
+    UILabel *demo6Lbl = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 50, 30)];
+    demo6Lbl.text = @"图片:";
+    [demo6View addSubview:demo6Lbl];
+    MZPageControl *demo6PageControl = [[MZPageControl alloc] initWithFrame:CGRectMake(66, 0, 300, 30)];
+    demo6PageControl.numberOfPages = 6;
+    demo6PageControl.currentPage = 2;
+    demo6PageControl.pageSize = CGSizeMake(20, 20);
+    demo6PageControl.currentPageSize = CGSizeMake(25, 25);
+    demo6PageControl.pageImage = [UIImage imageNamed:@"home_icon_schedule_gary"];
+    demo6PageControl.currentPageImage = [UIImage imageNamed:@"home_icon_schedule_current"];
+    [demo6View addSubview:demo6PageControl];
 }
 
 
