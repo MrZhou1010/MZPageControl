@@ -42,6 +42,16 @@ typedef NS_ENUM(NSUInteger, MZPageControlAlignment) {
 @property (nonatomic, strong) UIImage *pageImage;
 /// 当前page的image
 @property (nonatomic, strong) UIImage *currentPageImage;
+/// 是否显示page的序号
+@property (nonatomic, assign) BOOL showPageNumber;
+/// page的序号文字颜色
+@property (nonatomic, strong) UIColor *pageNumberColor;
+/// page的序号文字字体
+@property (nonatomic, strong) UIFont *pageNumberFont;
+/// 当前page的序号文字颜色
+@property (nonatomic, strong) UIColor *currentPageNumberColor;
+/// 当前page的序号文字字体
+@property (nonatomic, strong) UIFont *currentPageNumberFont;
 /// 点击page的回调
 @property (nonatomic, copy) void(^pageClickBlock)(NSInteger index);
 

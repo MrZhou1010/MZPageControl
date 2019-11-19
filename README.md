@@ -87,5 +87,25 @@
     demo6PageControl.pageImage = [UIImage imageNamed:@"home_icon_schedule_gary"];
     demo6PageControl.currentPageImage = [UIImage imageNamed:@"home_icon_schedule_current"];
     [demo6View addSubview:demo6PageControl];
+    
+    UIView *demo7View = [[UIView alloc] initWithFrame:CGRectMake(0, 400, self.view.frame.size.width, 30)];
+    demo7View.backgroundColor = [UIColor orangeColor];
+    [self.view addSubview:demo7View];
+    UILabel *demo7Lbl = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 50, 30)];
+    demo7Lbl.text = @"序号:";
+    [demo7View addSubview:demo7Lbl];
+    MZPageControl *demo7PageControl = [[MZPageControl alloc] initWithFrame:CGRectMake(66, 0, 300, 30)];
+    demo7PageControl.numberOfPages = 6;
+    demo7PageControl.currentPage = 3;
+    demo7PageControl.pageSize = CGSizeMake(20, 20);
+    demo7PageControl.currentPageSize = CGSizeMake(26, 26);
+    demo7PageControl.pageCornerRadius = 10;
+    demo7PageControl.currentPageCornerRadius = 13;
+    demo7PageControl.showPageNumber = YES;
+    demo7PageControl.pageNumberColor = [UIColor orangeColor];
+    demo7PageControl.currentPageNumberColor = [UIColor purpleColor];
+    demo7PageControl.pageNumberFont = [UIFont systemFontOfSize:10];
+    demo7PageControl.currentPageNumberFont = [UIFont systemFontOfSize:13];
+    [demo7View addSubview:demo7PageControl];
 
 

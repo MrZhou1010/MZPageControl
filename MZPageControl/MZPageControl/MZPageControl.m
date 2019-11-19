@@ -11,6 +11,7 @@
 @interface MZPageControl()
 
 @property (nonatomic, strong) NSMutableArray *pages;
+@property (nonatomic, strong) NSMutableArray *pageNumbers;
 
 @end
 
@@ -33,6 +34,7 @@
 - (void)initialize {
     self.backgroundColor = [UIColor clearColor];
     self.pages = [NSMutableArray array];
+    self.pageNumbers = [NSMutableArray array];
     self.numberOfPages = 0;
     self.currentPage = 0;
     self.pageSpacing = 8;
@@ -41,6 +43,11 @@
     self.alignment = AlignmentCenter;
     self.pageIndicatorTintColor = [UIColor grayColor];
     self.currentPageIndicatorTintColor = [UIColor whiteColor];
+    self.showPageNumber = NO;
+    self.pageNumberColor = [UIColor lightGrayColor];
+    self.pageNumberFont = [UIFont systemFontOfSize:8.0];
+    self.currentPageNumberColor = [UIColor blackColor];
+    self.currentPageNumberFont = [UIFont systemFontOfSize:8.0];
 }
 
 - (void)setNumberOfPages:(NSInteger)numberOfPages {
@@ -52,6 +59,7 @@
     _currentPage = currentPage;
     [self changeColor];
     [self updateFrame];
+    [self updatePageNumber];
 }
 
 - (void)setPageSpacing:(CGFloat)pageSpacing {
@@ -102,6 +110,33 @@
 - (void)setCurrentPageImage:(UIImage *)currentPageImage {
     _currentPageImage = currentPageImage;
     [self changeColor];
+}
+
+- (void)setShowPageNumber:(BOOL)showPageNumber {
+    _showPageNumber = showPageNumber;
+    if (showPageNumber) {
+        [self setupPageNumber];
+    }
+}
+
+- (void)setPageNumberColor:(UIColor *)pageNumberColor {
+    _pageNumberColor = pageNumberColor;
+    [self updatePageNumber];
+}
+
+- (void)setPageNumberFont:(UIFont *)pageNumberFont {
+    _pageNumberFont = pageNumberFont;
+    [self updatePageNumber];
+}
+
+- (void)setCurrentPageNumberColor:(UIColor *)currentPageNumberColor {
+    _currentPageNumberColor = currentPageNumberColor;
+    [self updatePageNumber];
+}
+
+- (void)setCurrentPageNumberFont:(UIFont *)currentPageNumberFont {
+    _currentPageNumberFont = currentPageNumberFont;
+    [self updatePageNumber];
 }
 
 - (void)setupPages {
@@ -191,6 +226,28 @@
                 imageView.backgroundColor = self.pageIndicatorTintColor;
             }
         }
+    }
+}
+
+- (void)setupPageNumber {
+    for (NSInteger i = 0; i < self.pages.count; i++) {
+        UIImageView *imageView = (UIImageView *)self.pages[i];
+        UILabel *numberLbl = [[UILabel alloc] initWithFrame:imageView.bounds];
+        numberLbl.text = [NSString stringWithFormat:@"%ld", (long)(i + 1)];
+        numberLbl.textColor = i == self.currentPage ? self.currentPageNumberColor : self.pageNumberColor;
+        numberLbl.font = i == self.currentPage ? self.currentPageNumberFont : self.pageNumberFont;
+        numberLbl.textAlignment = NSTextAlignmentCenter;
+        [imageView addSubview:numberLbl];
+        [self.pageNumbers addObject:numberLbl];
+    }
+}
+
+- (void)updatePageNumber {
+    for (NSInteger i = 0; i < self.pageNumbers.count; i++) {
+        UILabel *numberLbl = (UILabel *)self.pageNumbers[i];
+        numberLbl.frame = CGRectMake(0, 0, [self getFrame:i].size.width, [self getFrame:i].size.height);
+        numberLbl.textColor = i == self.currentPage ? self.currentPageNumberColor : self.pageNumberColor;
+        numberLbl.font = i == self.currentPage ? self.currentPageNumberFont : self.pageNumberFont;
     }
 }
 
