@@ -43,11 +43,18 @@
     self.alignment = AlignmentCenter;
     self.pageIndicatorTintColor = [UIColor grayColor];
     self.currentPageIndicatorTintColor = [UIColor whiteColor];
+    
     self.showPageNumber = NO;
     self.pageNumberColor = [UIColor lightGrayColor];
     self.pageNumberFont = [UIFont systemFontOfSize:8.0];
     self.currentPageNumberColor = [UIColor blackColor];
     self.currentPageNumberFont = [UIFont systemFontOfSize:8.0];
+    
+    self.showPageBorder = NO;
+    self.pageBorderColor = [UIColor whiteColor];
+    self.pageBorderWidth = 1.0;
+    self.currentPageBorderColor = [UIColor grayColor];
+    self.currentPageBorderWidth = 1.0;
 }
 
 - (void)setNumberOfPages:(NSInteger)numberOfPages {
@@ -60,6 +67,7 @@
     [self changeColor];
     [self updateFrame];
     [self updatePageNumber];
+    [self updatePageBorder];
 }
 
 - (void)setPageSpacing:(CGFloat)pageSpacing {
@@ -137,6 +145,31 @@
 - (void)setCurrentPageNumberFont:(UIFont *)currentPageNumberFont {
     _currentPageNumberFont = currentPageNumberFont;
     [self updatePageNumber];
+}
+
+- (void)setShowPageBorder:(BOOL)showPageBorder {
+    _showPageBorder = showPageBorder;
+    [self updatePageBorder];
+}
+
+- (void)setPageBorderColor:(UIColor *)pageBorderColor {
+    _pageBorderColor = pageBorderColor;
+    [self updatePageBorder];
+}
+
+- (void)setPageBorderWidth:(CGFloat)pageBorderWidth {
+    _pageBorderWidth = pageBorderWidth;
+    [self updatePageBorder];
+}
+
+- (void)setCurrentPageBorderColor:(UIColor *)currentPageBorderColor {
+    _currentPageBorderColor = currentPageBorderColor;
+    [self updatePageBorder];
+}
+
+- (void)setCurrentPageBorderWidth:(CGFloat)currentPageBorderWidth {
+    _currentPageBorderWidth = currentPageBorderWidth;
+    [self updatePageBorder];
 }
 
 - (void)setupPages {
@@ -248,6 +281,16 @@
         numberLbl.frame = CGRectMake(0, 0, [self getFrame:i].size.width, [self getFrame:i].size.height);
         numberLbl.textColor = i == self.currentPage ? self.currentPageNumberColor : self.pageNumberColor;
         numberLbl.font = i == self.currentPage ? self.currentPageNumberFont : self.pageNumberFont;
+    }
+}
+
+- (void)updatePageBorder {
+    if (self.showPageBorder) {
+        for (NSInteger i = 0; i < self.pages.count; i++) {
+            UIImageView *imageView = (UIImageView *)self.pages[i];
+            imageView.layer.borderColor = i == self.currentPage ? self.currentPageBorderColor.CGColor : self.pageBorderColor.CGColor;
+            imageView.layer.borderWidth = i == self.currentPage ? self.currentPageBorderWidth : self.pageBorderWidth;
+        }
     }
 }
 

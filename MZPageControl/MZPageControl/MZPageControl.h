@@ -54,6 +54,16 @@ typedef NS_ENUM(NSUInteger, MZPageControlAlignment) {
 @property (nonatomic, strong) UIFont *currentPageNumberFont;
 /// 点击page的回调
 @property (nonatomic, copy) void(^pageClickBlock)(NSInteger index);
+/// 是否显示page的边框
+@property (nonatomic, assign) BOOL showPageBorder;
+/// page的边框宽度
+@property (nonatomic, assign) CGFloat pageBorderWidth;
+/// page的边框颜色
+@property (nonatomic, strong) UIColor *pageBorderColor;
+/// 当前page的边框宽度
+@property (nonatomic, assign) CGFloat currentPageBorderWidth;
+/// 当前page的边框颜色
+@property (nonatomic, strong) UIColor *currentPageBorderColor;
 
 @end
 

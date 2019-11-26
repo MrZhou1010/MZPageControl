@@ -26,7 +26,7 @@
     demo1Lbl.text = @"默认:";
     [demo1View addSubview:demo1Lbl];
     MZPageControl *demo1PageControl = [[MZPageControl alloc] initWithFrame:CGRectMake(66, 0, 300, 30)];
-    demo1PageControl.numberOfPages = 5;
+    demo1PageControl.numberOfPages = 6;
     demo1PageControl.currentPage = 0;
     [demo1View addSubview:demo1PageControl];
     
@@ -79,10 +79,10 @@
     demo5PageControl.numberOfPages = 6;
     demo5PageControl.currentPage = 2;
     demo5PageControl.alignment = AlignmentLeft;
-    demo5PageControl.pageSize = CGSizeMake(10, 5);
+    demo5PageControl.pageSize = CGSizeMake(10, 6);
     demo5PageControl.currentPageSize = CGSizeMake(20, 10);
     demo5PageControl.pageCornerRadius = 3;
-    demo5PageControl.currentPageCornerRadius = 8;
+    demo5PageControl.currentPageCornerRadius = 6;
     [demo5View addSubview:demo5PageControl];
     
     UIView *demo6View = [[UIView alloc] initWithFrame:CGRectMake(0, 350, self.view.frame.size.width, 30)];
@@ -119,7 +119,26 @@
     demo7PageControl.pageNumberFont = [UIFont systemFontOfSize:10];
     demo7PageControl.currentPageNumberFont = [UIFont systemFontOfSize:13];
     [demo7View addSubview:demo7PageControl];
+    
+    UIView *demo8View = [[UIView alloc] initWithFrame:CGRectMake(0, 450, self.view.frame.size.width, 30)];
+    demo8View.backgroundColor = [UIColor orangeColor];
+    [self.view addSubview:demo8View];
+    UILabel *demo8Lbl = [[UILabel alloc] initWithFrame:CGRectMake(16, 0, 50, 30)];
+    demo8Lbl.text = @"边框:";
+    [demo8View addSubview:demo8Lbl];
+    MZPageControl *demo8PageControl = [[MZPageControl alloc] initWithFrame:CGRectMake(66, 0, 300, 30)];
+    demo8PageControl.numberOfPages = 6;
+    demo8PageControl.currentPage = 2;
+    demo8PageControl.pageSize = CGSizeMake(20, 20);
+    demo8PageControl.currentPageSize = CGSizeMake(26, 26);
+    demo8PageControl.pageCornerRadius = 10;
+    demo8PageControl.currentPageCornerRadius = 13;
+    demo8PageControl.showPageBorder = YES;
+    demo8PageControl.pageBorderColor = [UIColor whiteColor];
+    demo8PageControl.currentPageBorderColor = [UIColor grayColor];
+    demo8PageControl.pageBorderWidth = 3;
+    demo8PageControl.currentPageBorderWidth = 5;
+    [demo8View addSubview:demo8PageControl];
 }
-
 
 @end
