@@ -37,8 +37,8 @@
     self.pageNumbers = [NSMutableArray array];
     self.numberOfPages = 0;
     self.currentPage = 0;
-    self.pageSpacing = 8;
-    self.pageSize = CGSizeMake(8, 8);
+    self.pageSpacing = 8.0;
+    self.pageSize = CGSizeMake(8.0, 8.0);
     self.currentPageSize = self.pageSize;
     self.alignment = AlignmentCenter;
     self.pageIndicatorTintColor = [UIColor grayColor];
