@@ -193,7 +193,7 @@
         CGRect frame = [self getFrame:i];
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];
         imageView.tag = 1000 + i;
-        imageView.userInteractionEnabled = YES;
+        imageView.userInteractionEnabled = self.isClickEnable;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pageClick:)];
         [imageView addGestureRecognizer:tap];
         [self addSubview:imageView];
