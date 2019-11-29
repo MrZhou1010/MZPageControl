@@ -55,6 +55,8 @@
     self.pageBorderWidth = 1.0;
     self.currentPageBorderColor = [UIColor grayColor];
     self.currentPageBorderWidth = 1.0;
+    
+    self.isClickEnable = YES;
 }
 
 - (void)setNumberOfPages:(NSInteger)numberOfPages {
@@ -170,6 +172,14 @@
 - (void)setCurrentPageBorderWidth:(CGFloat)currentPageBorderWidth {
     _currentPageBorderWidth = currentPageBorderWidth;
     [self updatePageBorder];
+}
+
+- (void)setIsClickEnable:(BOOL)isClickEnable {
+    _isClickEnable = isClickEnable;
+    for (NSInteger i = 0; i < self.pages.count; i++) {
+        UIImageView *imageView = (UIImageView *)self.pages[i];
+        imageView.userInteractionEnabled = isClickEnable;
+    }
 }
 
 - (void)setupPages {

@@ -138,6 +138,7 @@
     demo8PageControl.currentPageBorderColor = [UIColor grayColor];
     demo8PageControl.pageBorderWidth = 3;
     demo8PageControl.currentPageBorderWidth = 5;
+    demo8PageControl.isClickEnable = NO;
     [demo8View addSubview:demo8PageControl];
 }
 

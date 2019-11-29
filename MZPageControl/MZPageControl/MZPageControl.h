@@ -62,6 +62,8 @@ typedef NS_ENUM(NSUInteger, MZPageControlAlignment) {
 @property (nonatomic, assign) CGFloat currentPageBorderWidth;
 /// 当前page的边框颜色,默认为gray
 @property (nonatomic, strong) UIColor *currentPageBorderColor;
+/// 是否可以点击page
+@property (nonatomic, assign) BOOL isClickEnable;
 /// 点击page的回调
 @property (nonatomic, copy) void(^pageClickBlock)(NSInteger index);
 
