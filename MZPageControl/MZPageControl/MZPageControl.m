@@ -17,6 +17,7 @@
 
 @implementation MZPageControl
 
+#pragma mark - 初始化
 - (instancetype)init {
     if (self = [super init]) {
         [self initialize];
@@ -59,6 +60,7 @@
     self.isClickEnable = YES;
 }
 
+#pragma mark - 属性
 - (void)setNumberOfPages:(NSInteger)numberOfPages {
     _numberOfPages = numberOfPages;
     [self setupPages];
@@ -182,6 +184,7 @@
     }
 }
 
+#pragma mark - Function
 - (void)setupPages {
     if (self.pages.count > 0) {
         for (UIImageView *page in self.pages) {
