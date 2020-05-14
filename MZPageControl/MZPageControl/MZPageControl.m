@@ -44,19 +44,16 @@
     self.alignment = AlignmentCenter;
     self.pageIndicatorTintColor = [UIColor grayColor];
     self.currentPageIndicatorTintColor = [UIColor whiteColor];
-    
     self.showPageNumber = NO;
     self.pageNumberColor = [UIColor lightGrayColor];
     self.pageNumberFont = [UIFont systemFontOfSize:8.0];
     self.currentPageNumberColor = [UIColor blackColor];
     self.currentPageNumberFont = [UIFont systemFontOfSize:8.0];
-    
     self.showPageBorder = NO;
     self.pageBorderColor = [UIColor whiteColor];
     self.pageBorderWidth = 1.0;
     self.currentPageBorderColor = [UIColor grayColor];
     self.currentPageBorderWidth = 1.0;
-    
     self.isClickEnable = YES;
 }
 
