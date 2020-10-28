@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSMutableArray *pages;
 @property (nonatomic, strong) NSMutableArray *pageNumbers;
+@property (nonatomic, assign) BOOL isAnimating;
 
 @end
 
@@ -55,6 +56,8 @@
     self.currentPageBorderColor = [UIColor grayColor];
     self.currentPageBorderWidth = 1.0;
     self.isClickEnable = YES;
+    self.isAnimationEnable = NO;
+    self.isAnimating = NO;
 }
 
 #pragma mark - 属性
@@ -64,11 +67,24 @@
 }
 
 - (void)setCurrentPage:(NSInteger)currentPage {
-    _currentPage = currentPage;
-    [self changeColor];
-    [self updateFrame];
-    [self updatePageNumber];
-    [self updatePageBorder];
+    if (self.isAnimationEnable) {
+        [self changeColor];
+        [self updateFrame];
+        if (currentPage == _currentPage || self.isAnimating) {
+            return;
+        }
+        if (currentPage > _currentPage) {
+            [self startAnimationToRight:currentPage];
+        } else {
+            [self startAnimationToLeft:currentPage];
+        }
+    } else {
+        _currentPage = currentPage;
+        [self changeColor];
+        [self updateFrame];
+        [self updatePageNumber];
+        [self updatePageBorder];
+    }
 }
 
 - (void)setPageSpacing:(CGFloat)pageSpacing {
@@ -216,7 +232,7 @@
             pageX = self.frame.size.width - totalW - self.pageSpacing;
             break;
         case AlignmentCenter:
-            pageX = (self.frame.size.width - totalW) / 2 + self.pageSpacing;
+            pageX = (self.frame.size.width - totalW) / 2.0 + self.pageSpacing;
             break;
         default:
             break;
@@ -224,7 +240,7 @@
     CGFloat width = index == self.currentPage ? self.currentPageSize.width : self.pageSize.width;
     CGFloat height = index == self.currentPage ? self.currentPageSize.height : self.pageSize.height;
     CGFloat x = index <= self.currentPage ? pageX + pageW * index : pageX + pageW * (index - 1) + currentPageW;
-    CGFloat y = (self.frame.size.height - height) / 2;
+    CGFloat y = (self.frame.size.height - height) / 2.0;
     return CGRectMake(x, y, width, height);
 }
 
@@ -233,7 +249,7 @@
         CGRect frame = [self getFrame:i];
         UIImageView *imageView = (UIImageView *)self.pages[i];
         imageView.frame = frame;
-        CGFloat radius = self.pageCornerRadius == 0 ? frame.size.height / 2 : self.pageCornerRadius;
+        CGFloat radius = self.pageCornerRadius == 0 ? frame.size.height / 2.0 : self.pageCornerRadius;
         if (i == self.currentPage) {
             if (self.currentPageImage) {
                 radius = 0;
@@ -310,11 +326,83 @@
 }
 
 - (void)pageClick:(UITapGestureRecognizer *)tap {
+    if (self.isAnimating) {
+        return;
+    }
     NSInteger index = tap.view.tag - 1000;
     [self setCurrentPage:index];
     if (self.pageClickBlock) {
         self.pageClickBlock(index);
     }
+}
+
+#pragma mark - Animation
+/// 向右动画
+- (void)startAnimationToRight:(NSInteger)currentPage {
+    UIImageView *startView = (UIImageView *)self.pages[_currentPage];
+    [self bringSubviewToFront:startView];
+    self.isAnimating = YES;
+    [UIView animateWithDuration:0.3 animations:^{
+        CGRect tempFrame = startView.frame;
+        // 当前选中的圆点,x不变,宽度增加,增加几个圆点和间隙距离
+        CGFloat width = self.currentPageSize.width + (self.pageSize.width + self.pageSpacing) * (currentPage - self->_currentPage);
+        CGFloat height = tempFrame.size.height;
+        tempFrame.size = CGSizeMake(width, height);
+        startView.frame = tempFrame;
+    } completion:^(BOOL finished) {
+        UIImageView *endView = (UIImageView *)self.pages[currentPage];
+        endView.backgroundColor = startView.backgroundColor;
+        endView.frame = startView.frame;
+        [self bringSubviewToFront:endView];
+        startView.backgroundColor = self.pageIndicatorTintColor;
+        CGFloat startX = CGRectGetMinX(startView.frame);
+        for (int i = 0; i < currentPage - self->_currentPage; i++) {
+            UIView *tempView = self.pages[self->_currentPage + i];
+            CGRect tempFrame = tempView.frame;
+            tempFrame.origin = CGPointMake(startX + (self.pageSize.width + self.pageSpacing) * i, tempFrame.origin.y);
+            tempFrame.size = CGSizeMake(self.pageSize.width, self.pageSize.height);
+            tempView.frame = tempFrame;
+        }
+        [UIView animateWithDuration:0.3 animations:^{
+            endView.frame = CGRectMake(CGRectGetMaxX(endView.frame) - self.currentPageSize.width, CGRectGetMinY(endView.frame), self.currentPageSize.width, self.currentPageSize.height);
+        } completion:^(BOOL finished) {
+            self->_currentPage = currentPage;
+            self.isAnimating = NO;
+        }];
+    }];
+}
+
+/// 向左动画
+- (void)startAnimationToLeft:(NSInteger)currentPage {
+    UIImageView *startView = (UIImageView *)self.pages[_currentPage];
+    [self bringSubviewToFront:startView];
+    self.isAnimating = YES;
+    [UIView animateWithDuration:0.3 animations:^{
+        // 当前选中的圆点,x向左移动,宽度增加,增加几个圆点和间隙距离
+        CGFloat x = CGRectGetMinX(startView.frame) - (self.pageSize.width + self.pageSpacing) * (self->_currentPage - currentPage);
+        CGFloat width = self.currentPageSize.width + (self.pageSize.width + self.pageSpacing) * (self->_currentPage - currentPage);
+        startView.frame = CGRectMake(x, CGRectGetMinY(startView.frame), width, CGRectGetHeight(startView.frame));
+    } completion:^(BOOL finished) {
+        UIImageView *endView = (UIImageView *)self.pages[currentPage];
+        endView.backgroundColor = startView.backgroundColor;
+        endView.frame = startView.frame;
+        [self bringSubviewToFront:endView];
+        startView.backgroundColor = self.pageIndicatorTintColor;
+        CGFloat startX = CGRectGetMaxX(startView.frame);
+        for (int i = 0; i < self->_currentPage - currentPage; i++) {
+            UIView *tempView = self.pages[self->_currentPage - i];
+            CGRect tempFrame = tempView.frame;
+            tempFrame.origin = CGPointMake(startX - self.pageSize.width - (self.pageSize.width + self.pageSpacing) * i, tempFrame.origin.y);
+            tempFrame.size = CGSizeMake(self.pageSize.width, self.pageSize.height);
+            tempView.frame = tempFrame;
+        }
+        [UIView animateWithDuration:0.3 animations:^{
+            endView.frame = CGRectMake(CGRectGetMinX(endView.frame), CGRectGetMinY(endView.frame), self.currentPageSize.width, self.currentPageSize.height);
+        } completion:^(BOOL finished) {
+            self->_currentPage = currentPage;
+            self.isAnimating = NO;
+        }];
+    }];
 }
 
 @end

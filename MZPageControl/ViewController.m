@@ -27,6 +27,7 @@
     [demo1View addSubview:demo1Lbl];
     MZPageControl *demo1PageControl = [[MZPageControl alloc] initWithFrame:CGRectMake(66, 0, 300, 30)];
     demo1PageControl.numberOfPages = 6;
+    demo1PageControl.isAnimationEnable = YES;
     demo1PageControl.currentPage = 0;
     [demo1View addSubview:demo1PageControl];
     
@@ -38,6 +39,7 @@
     [demo2View addSubview:demo2Lbl];
     MZPageControl *demo2PageControl = [[MZPageControl alloc] initWithFrame:CGRectMake(66, 0, 300, 30)];
     demo2PageControl.numberOfPages = 6;
+    demo2PageControl.isAnimationEnable = YES;
     demo2PageControl.currentPage = 2;
     demo2PageControl.pageIndicatorTintColor = [UIColor greenColor];
     demo2PageControl.currentPageIndicatorTintColor = [UIColor blueColor];
@@ -64,9 +66,10 @@
     [demo4View addSubview:demo4Lbl];
     MZPageControl *demo4PageControl = [[MZPageControl alloc] initWithFrame:CGRectMake(66, 0, 300, 30)];
     demo4PageControl.numberOfPages = 6;
-    demo4PageControl.currentPage = 2;
     demo4PageControl.alignment = AlignmentRight;
     demo4PageControl.currentPageSize = CGSizeMake(16, 8);
+    demo4PageControl.isAnimationEnable = YES;
+    demo4PageControl.currentPage = 2;
     [demo4View addSubview:demo4PageControl];
     
     UIView *demo5View = [[UIView alloc] initWithFrame:CGRectMake(0, 300, self.view.frame.size.width, 30)];

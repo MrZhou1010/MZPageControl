@@ -11,9 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, MZPageControlAlignment) {
-    AlignmentLeft = 0,
-    AlignmentCenter,
-    AlignmentRight
+    AlignmentLeft = 0,      /// 居左
+    AlignmentCenter = 1,    /// 居中
+    AlignmentRight = 2      /// 居右
 };
 
 @interface MZPageControl : UIControl
@@ -66,6 +66,8 @@ typedef NS_ENUM(NSUInteger, MZPageControlAlignment) {
 @property (nonatomic, assign) BOOL isClickEnable;
 /// 点击page的回调
 @property (nonatomic, copy) void(^pageClickBlock)(NSInteger index);
+/// 是否动画
+@property (nonatomic, assign) BOOL isAnimationEnable;
 
 @end
 
