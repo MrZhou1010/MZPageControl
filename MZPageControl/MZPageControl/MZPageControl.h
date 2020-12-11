@@ -42,7 +42,7 @@ typedef NS_ENUM(NSUInteger, MZPageControlAlignment) {
 @property (nonatomic, strong) UIImage *pageImage;
 /// 当前page的image
 @property (nonatomic, strong) UIImage *currentPageImage;
-/// 是否显示page的序号
+/// 是否显示page的序号,默认为NO
 @property (nonatomic, assign) BOOL showPageNumber;
 /// page的序号文字颜色,默认为lightGrayColor
 @property (nonatomic, strong) UIColor *pageNumberColor;
@@ -52,21 +52,21 @@ typedef NS_ENUM(NSUInteger, MZPageControlAlignment) {
 @property (nonatomic, strong) UIColor *currentPageNumberColor;
 /// 当前page的序号文字字体,默认为8.0
 @property (nonatomic, strong) UIFont *currentPageNumberFont;
-/// 是否显示page的边框
+/// 是否显示page的边框,默认为NO
 @property (nonatomic, assign) BOOL showPageBorder;
 /// page的边框宽度,默认为1.0
 @property (nonatomic, assign) CGFloat pageBorderWidth;
-/// page的边框颜色,默认为white
+/// page的边框颜色,默认为whiteColor
 @property (nonatomic, strong) UIColor *pageBorderColor;
 /// 当前page的边框宽度,默认为1.0
 @property (nonatomic, assign) CGFloat currentPageBorderWidth;
 /// 当前page的边框颜色,默认为gray
 @property (nonatomic, strong) UIColor *currentPageBorderColor;
-/// 是否可以点击page
+/// 是否可以点击page,默认为YES
 @property (nonatomic, assign) BOOL isClickEnable;
 /// 点击page的回调
 @property (nonatomic, copy) void(^pageClickBlock)(NSInteger index);
-/// 是否动画
+/// 是否动画,默认为NO
 @property (nonatomic, assign) BOOL isAnimationEnable;
 
 @end

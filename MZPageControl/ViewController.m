@@ -18,7 +18,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
     UIView *demo1View = [[UIView alloc] initWithFrame:CGRectMake(0, 100, self.view.frame.size.width, 30)];
     demo1View.backgroundColor = [UIColor orangeColor];
     [self.view addSubview:demo1View];
