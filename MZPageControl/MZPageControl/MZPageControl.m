@@ -42,7 +42,7 @@
     self.pageSpacing = 8.0;
     self.pageSize = CGSizeMake(8.0, 8.0);
     self.currentPageSize = self.pageSize;
-    self.alignment = AlignmentCenter;
+    self.alignment = MZPageControlAlignmentCenter;
     self.pageIndicatorTintColor = [UIColor grayColor];
     self.currentPageIndicatorTintColor = [UIColor whiteColor];
     self.showPageNumber = NO;
@@ -55,8 +55,8 @@
     self.pageBorderWidth = 1.0;
     self.currentPageBorderColor = [UIColor grayColor];
     self.currentPageBorderWidth = 1.0;
-    self.isClickEnable = YES;
-    self.isAnimationEnable = NO;
+    self.clickEnable = YES;
+    self.animationEnable = NO;
     self.isAnimating = NO;
 }
 
@@ -67,7 +67,7 @@
 }
 
 - (void)setCurrentPage:(NSInteger)currentPage {
-    if (self.isAnimationEnable) {
+    if (self.animationEnable) {
         [self changeColor];
         [self updateFrame];
         if (currentPage == _currentPage || self.isAnimating) {
@@ -189,15 +189,15 @@
     [self updatePageBorder];
 }
 
-- (void)setIsClickEnable:(BOOL)isClickEnable {
-    _isClickEnable = isClickEnable;
+- (void)setClickEnable:(BOOL)clickEnable {
+    _clickEnable = clickEnable;
     for (NSInteger i = 0; i < self.pages.count; i++) {
         UIImageView *imageView = (UIImageView *)self.pages[i];
-        imageView.userInteractionEnabled = isClickEnable;
+        imageView.userInteractionEnabled = clickEnable;
     }
 }
 
-#pragma mark - Function
+#pragma mark - 方法
 - (void)setupPages {
     if (self.pages.count > 0) {
         for (UIImageView *page in self.pages) {
@@ -209,7 +209,7 @@
         CGRect frame = [self getFrame:i];
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];
         imageView.tag = 1000 + i;
-        imageView.userInteractionEnabled = self.isClickEnable;
+        imageView.userInteractionEnabled = self.clickEnable;
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pageClick:)];
         [imageView addGestureRecognizer:tap];
         [self addSubview:imageView];
@@ -225,13 +225,13 @@
     CGFloat totalW = pageW * (self.numberOfPages - 1) + currentPageW + self.pageSpacing;
     CGFloat pageX = 0.0;
     switch (self.alignment) {
-        case AlignmentLeft:
+        case MZPageControlAlignmentLeft:
             pageX = self.pageSpacing;
             break;
-        case AlignmentRight:
+        case MZPageControlAlignmentRight:
             pageX = self.frame.size.width - totalW - self.pageSpacing;
             break;
-        case AlignmentCenter:
+        case MZPageControlAlignmentCenter:
             pageX = (self.frame.size.width - totalW) / 2.0 + self.pageSpacing;
             break;
         default:
@@ -336,10 +336,10 @@
     }
 }
 
-#pragma mark - Animation
+#pragma mark - 动画
 /// 向右动画
 - (void)startAnimationToRight:(NSInteger)currentPage {
-    UIImageView *startView = (UIImageView *)self.pages[_currentPage];
+    UIImageView *startView = (UIImageView *)self.pages[self->_currentPage];
     [self bringSubviewToFront:startView];
     self.isAnimating = YES;
     [UIView animateWithDuration:0.3 animations:^{
@@ -374,7 +374,7 @@
 
 /// 向左动画
 - (void)startAnimationToLeft:(NSInteger)currentPage {
-    UIImageView *startView = (UIImageView *)self.pages[_currentPage];
+    UIImageView *startView = (UIImageView *)self.pages[self->_currentPage];
     [self bringSubviewToFront:startView];
     self.isAnimating = YES;
     [UIView animateWithDuration:0.3 animations:^{
